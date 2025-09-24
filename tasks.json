@@ -1,0 +1,19 @@
+{
+	"1": {
+		"name":"Output with echo",
+		"startcmd":"",
+		"list": [
+			"echo"
+		],
+		"result":"Diamond"
+	},	
+	"2": {
+		"name":"Lowercase to uppercase with tr ",
+		"startcmd":"echo \"Diamond\"",
+		"list": [
+			"tr"
+		],
+		"result":"DIAMOND"
+	}	
+
+}
