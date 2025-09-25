@@ -1,9 +1,13 @@
 import subprocess
 import os
 import json
-import bashlex
 
 MaxTask = 2
+
+
+
+
+
 
 
 
@@ -17,43 +21,39 @@ def run_command(command):
 
 
 
+
+
+
+
 #================================= Menu function =======================================
-def fail_menu(n):
+def menu(n, type):
     print('Menu:')
-    print('    Try again (1)')
+    if type == 'm':
+        print('    Do the next task - №' + str(n+1) + ' (1)')
+    elif type == 'f':
+        print('    Try again (1)')
     print('    Select another task (2)')
     print('    Exit (3)')
     Select = int(input('Select:'))
     match Select:
         case 1:
-            task(n)
+            try:
+                if type == 'm':
+                    task(n+1)
+                elif type == 'f':
+                    task(n)
+            except:
+                print('There isn\'t task associated with this number')
+                menu(n, 'm')
         case 2:
             try:
                 task(int(input('Enter task number: ')))
             except:
                 print('There isn\'t task associated with this number')
+                menu(n, 'm')
         case 3:
             exit
 
-def main_menu(n):
-    print('Menu:')
-    print('    Do the next task (1)')
-    print('    Select another task (2)')
-    print('    Exit (3)')
-    Select = int(input('Select:'))
-    match Select:
-        case 1:
-            try:
-                task(n+1)
-            except:
-                print('There isn\'t task associated with this number')
-        case 2:
-            try:
-                task(int(input('Enter task number: ')))
-            except:
-                print('There isn\'t task associated with this number')
-        case 3:
-            exit
 
 
 
@@ -72,19 +72,17 @@ def task(n):
     print('Selected task: ' + task_number + ' ' + task_name)
     print('Result: ' + task_result)
 
-
     command_input = task_start_cmd + input('Command: ' + task_start_cmd)
-    #print(bashlex.parse(command_input))
     output = run_command(command_input).replace("\n", "")
     print('Output: ' + output)
 
 
     if output == task_result:
         print('Congratulations! You solved task №' + task_number + ' ' + task_name)
-        main_menu(n)
+        menu(n, 'm')
     else:
         print('No')
-        fail_menu(n)
+        menu(n, 'f')
 
 
 
@@ -93,4 +91,5 @@ def task(n):
 
 
 #====================================== Main ===========================================
-main_menu(0)
+os.system('clear')
+menu(0,'m')
